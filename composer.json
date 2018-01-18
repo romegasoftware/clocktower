@@ -9,6 +9,7 @@
     ],
     "homepage": "https://romegadigital.com/",
     "license": "MIT",
+    "type": "package",
     "authors": [
         {
             "name": "Braden Keith",
@@ -35,5 +36,6 @@
         "psr-4": {
             "Romega\\Clocktower\\Test\\": "test"
         }
-    }
+    },
+    "minimum-stability": "dev" 
 }

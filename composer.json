@@ -1,5 +1,5 @@
 {
-    "name": "romega/HasAPIMethods",
+    "name": "romega/clocktower",
     "description": "Offers a controller interfaces for easily implementing REST API methods.",
     "keywords": [
         "romega",
@@ -9,6 +9,7 @@
     ],
     "homepage": "https://romegadigital.com/",
     "license": "MIT",
+    "type": "package",
     "authors": [
         {
             "name": "Braden Keith",
@@ -24,16 +25,17 @@
         "php": ">=5.4"
     },
     "require-dev": {
-        "illuminate/http": "~5.0",
+        "illuminate/http": "~5.0"
     },
     "autoload": {
         "psr-4": {
-            "Romega\\HasAPIMethods\\": "src"
+            "Romega\\Clocktower\\": "src"
         }
     },
     "autoload-dev": {
         "psr-4": {
-            "Romega\\HasAPIMethods\\Test\\": "test"
+            "Romega\\Clocktower\\Test\\": "test"
         }
-    }
+    },
+    "minimum-stability": "dev" 
 }

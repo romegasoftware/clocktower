@@ -1,6 +1,6 @@
 <?php
 
-namespace Romega\HasAPIMethods;
+namespace Romega\Clocktower;
 
 use Illuminate\Http\Request;
 

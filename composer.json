@@ -1,0 +1,39 @@
+{
+    "name": "romega/HasAPIMethods",
+    "description": "Offers a controller interfaces for easily implementing REST API methods.",
+    "keywords": [
+        "romega",
+        "api",
+        "json",
+        "rest"
+    ],
+    "homepage": "https://romegadigital.com/",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Braden Keith",
+            "email": "bkeith@romegadigital.com",
+            "homepage": "https://bradenkeith.com/",
+            "role": "Developer"
+        }
+    ],
+    "config": {
+        "sort-packages": true
+    },
+    "require": {
+        "php": ">=5.4"
+    },
+    "require-dev": {
+        "illuminate/http": "~5.0",
+    },
+    "autoload": {
+        "psr-4": {
+            "Romega\\HasAPIMethods\\": "src"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Romega\\HasAPIMethods\\Test\\": "test"
+        }
+    }
+}

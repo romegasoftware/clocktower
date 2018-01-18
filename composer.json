@@ -1,5 +1,6 @@
 {
     "name": "romega/hasapimethods",
+    "version": "0.1",
     "description": "Offers a controller interfaces for easily implementing REST API methods.",
     "keywords": [
         "romega",

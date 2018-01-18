@@ -1,5 +1,5 @@
 {
-    "name": "romega/HasAPIMethods",
+    "name": "romega/clocktower",
     "description": "Offers a controller interfaces for easily implementing REST API methods.",
     "keywords": [
         "romega",
@@ -28,17 +28,12 @@
     },
     "autoload": {
         "psr-4": {
-            "Romega\\HasAPIMethods\\": "src"
+            "Romega\\Clocktower\\": "src"
         }
     },
     "autoload-dev": {
         "psr-4": {
-            "Romega\\HasAPIMethods\\Test\\": "test"
-        }
-    },
-    "extra": {
-        "branch-alias": {
-            "dev-master": "0.13-dev"
+            "Romega\\Clocktower\\Test\\": "test"
         }
     }
 }

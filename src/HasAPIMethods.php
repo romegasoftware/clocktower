@@ -132,7 +132,6 @@ trait HasAPIMethods
 	 */
 	public function store(Request $request)
 	{
-		// dd($request);
     	if($this->getPolicy('create')){
 	        $this->authorize('create', $this->getModel());
 	    }
@@ -165,14 +164,14 @@ trait HasAPIMethods
 	 */
 	public function update(Request $request)
 	{
-		if($this->getPolicy('update')){
-	        $this->authorize('update', $request);
-	    }
-
     	$model = $this->getModel();
     	$model = new $model;
-
     	$find_model = $model->findOrFail($request->id);
+
+		if($this->getPolicy('update')){
+	        $this->authorize('update', $find_model);
+	    }
+
     	$find_model->fill($request->toArray());
 
 	    $this->getUpdateAfterFillHook($find_model);

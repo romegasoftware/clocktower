@@ -195,11 +195,15 @@ trait HasAPIMethods
 	 */
 	public function destroy($id)
 	{
+		$model = $this->getModel();
+		$model = new $model;
+		$find_model = $model->findOrFail($request->id);
+
     	if($this->getPolicy('delete')){
-	        $this->authorize('delete', $this->getShowItemScope($request));
+	        $this->authorize('delete', $find_model);
 	    }
 
-	    $this->getModel()::destroy($id);
+	    $this->getModel()::destroy($find_model->id);
 
 	    return response()->json(['deleted'=>true]);
 	}

@@ -201,7 +201,7 @@ trait HasAPIMethods
 	{
 		$model = $this->getModel();
 		$model = new $model;
-		$find_model = $model->findOrFail($request->id);
+		$find_model = $model->findOrFail($id);
 
     	if($this->getPolicy('delete')){
 	        $this->authorize('delete', $find_model);

@@ -91,7 +91,7 @@ trait HasAPIMethods
     public function index()
     {
     	if($this->getPolicy('index')){
-	        $this->authorize('index', $this->getShowItemScope($request));
+	        $this->authorize('index',$this->getModel());
 	    }
 
         return $this->returnIndex(

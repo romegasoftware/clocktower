@@ -90,6 +90,10 @@ trait HasAPIMethods
      */
     public function index()
     {
+    	if($this->getPolicy('index')){
+	        $this->authorize('index', $this->getShowItemScope($request));
+	    }
+
         return $this->returnIndex(
         	$this->getIndexCollectionScope(),
         	$this->getIndexTransformer(),

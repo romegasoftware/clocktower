@@ -197,11 +197,11 @@ trait HasAPIMethods
 	 * @param  int  $id
 	 * @return \Illuminate\Http\Response
 	 */
-	public function destroy($id)
+	public function destroy(Request $request)
 	{
 		$model = $this->getModel();
 		$model = new $model;
-		$find_model = $model->findOrFail($id);
+		$find_model = $model->findOrFail($request->id);
 
     	if($this->getPolicy('delete')){
 	        $this->authorize('delete', $find_model);

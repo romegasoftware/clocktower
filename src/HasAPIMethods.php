@@ -87,7 +87,7 @@ trait HasAPIMethods
 
 	public function __construct(Request $request)
 	{
-	    $this->attributes = $request;
+		$this->attributes = $request;
 
 		if($this->attributes->include){
 			$this->includes = $this->attributes->include;
@@ -107,10 +107,10 @@ trait HasAPIMethods
     		collect($this->getAllowedMethods())->contains($method)
     		&& !collect($this->getProtectedMethods())->contains($method)
     	){
-	        throw new \UnauthorizedMethodCallException("Method [{$method}] is not authorized to run on [".get_class($this).'].');
-	    }
+    		throw new \UnauthorizedMethodCallException("Method [{$method}] is not authorized to run on [".get_class($this).'].');
+    	}
 
-        return call_user_func_array([$this, $method], $parameters);
+    	return call_user_func_array([$this, $method], $parameters);
     }
 
     /**
@@ -121,23 +121,23 @@ trait HasAPIMethods
     public function index()
     {
     	if($this->getPolicy('index')){
-	        $this->authorize('index',$this->getModel());
-	    }
+    		$this->authorize('index',$this->getModel());
+    	}
 
-        return $this->returnIndex(
-        	$this->getIndexCollectionScope(),
-        	$this->getIndexTransformer(),
-        	$this->getIndexIncludes()
-        );
+    	return $this->returnIndex(
+    		$this->getIndexCollectionScope(),
+    		$this->getIndexTransformer(),
+    		$this->getIndexIncludes()
+    	);
     }
 
     public function returnIndex($collection,$transformer,$includes = [])
     {
     	return fractal()
-    	       ->collection( $collection )
-    	       ->transformWith( $transformer )
-    	       ->parseIncludes( $includes )
-    	       ->toArray();
+	    	->collection( $collection )
+	    	->transformWith( $transformer )
+	    	->parseIncludes( $includes )
+	    	->toArray();
     }
     /**
      * Display the specified resource.
@@ -148,14 +148,14 @@ trait HasAPIMethods
     public function show(Request $request)
     {
     	if($this->getPolicy('view')){
-	        $this->authorize('view', $this->getShowItemScope($request));
-	    }
+    		$this->authorize('view', $this->getShowItemScope($request));
+    	}
 
-        return fractal()
-               ->item( $this->getShowItemScope($request) )
-               ->transformWith( $this->getTransformer() )
-               ->parseIncludes( $this->getShowIncludes() )
-               ->toArray();
+    	return fractal()
+	    	->item( $this->getShowItemScope($request) )
+	    	->transformWith( $this->getTransformer() )
+	    	->parseIncludes( $this->getShowIncludes() )
+	    	->toArray();
     }
 
 	/**
@@ -166,33 +166,33 @@ trait HasAPIMethods
 	 */
 	public function store(Request $request)
 	{
-    	if($this->getPolicy('create')){
-	        $this->authorize('create', $this->getModel());
-	    }
+		if($this->getPolicy('create')){
+			$this->authorize('create', $this->getModel());
+		}
 
-	    $request->validate(
-	    	array_merge($this->validationRules,$this->storeValidationRules),
-	    	array_merge($this->validationMessages,$this->storeValidationMessages)
-	    );
+		$request->validate(
+			array_merge($this->validationRules,$this->storeValidationRules),
+			array_merge($this->validationMessages,$this->storeValidationMessages)
+		);
 
 		$model = $this->getModel();
 		$model = new $model;
 
 		$created_model = $model->fill($request->input());
 
-	    $this->getStoreAfterFillHook($created_model);
+		$this->getStoreAfterFillHook($created_model);
 
-	    $created_model->save();
+		$created_model->save();
 
-	    $this->getStoreAfterSaveHook($created_model, $request);
+		$this->getStoreAfterSaveHook($created_model, $request);
 
-	    $return = fractal()
-	               ->item($created_model->fresh())
-	               ->transformWith( $this->getStoreTransformer() )
-	               ->toArray();
+		$return = fractal()
+			->item($created_model->fresh())
+			->transformWith( $this->getStoreTransformer() )
+			->toArray();
 	    
 
-	    return response()->json(array_merge(['created'=>true],$return));
+		return response()->json(array_merge(['created'=>true],$return));
 	}
 
 	/**
@@ -203,32 +203,32 @@ trait HasAPIMethods
 	 */
 	public function update(Request $request)
 	{
-	    $request->validate(
-	    	array_merge($this->validationRules,$this->updateValidationRules),
-	    	array_merge($this->validationMessages,$this->updateValidationMessages)
-	    );
+		$request->validate(
+			array_merge($this->validationRules,$this->updateValidationRules),
+			array_merge($this->validationMessages,$this->updateValidationMessages)
+		);
 
-    	$model = $this->getModel();
-    	$model = new $model;
-    	$find_model = $model->findOrFail($request->id);
+		$model = $this->getModel();
+		$model = new $model;
+		$find_model = $model->findOrFail($request->id);
 
 		if($this->getPolicy('update')){
-	        $this->authorize('update', $find_model);
-	    }
+			$this->authorize('update', $find_model);
+		}
 
-    	$find_model->fill($request->toArray());
+		$find_model->fill($request->toArray());
 
-	    $this->getUpdateAfterFillHook($find_model);
+		$this->getUpdateAfterFillHook($find_model);
 
-	    $find_model->save();
+		$find_model->save();
 
-	    $this->getUpdateAfterSaveHook($find_model, $request);
+		$this->getUpdateAfterSaveHook($find_model, $request);
 
-	    return fractal()
-	           ->item( $this->getShowItemScope($request) )
-	           ->transformWith( $this->getTransformer() )
-	           ->parseIncludes( $this->getShowIncludes() )
-	           ->toArray();
+		return fractal()
+			->item( $this->getShowItemScope($request) )
+			->transformWith( $this->getTransformer() )
+			->parseIncludes( $this->getShowIncludes() )
+			->toArray();
 	}
 
 	/**
@@ -243,13 +243,13 @@ trait HasAPIMethods
 		$model = new $model;
 		$find_model = $model->findOrFail($request->id);
 
-    	if($this->getPolicy('delete')){
-	        $this->authorize('delete', $find_model);
-	    }
+		if($this->getPolicy('delete')){
+			$this->authorize('delete', $find_model);
+		}
 
-	    $this->getModel()::destroy($find_model->id);
+		$this->getModel()::destroy($find_model->id);
 
-	    return response()->json(['deleted'=>true]);
+		return response()->json(['deleted'=>true]);
 	}
 
 	/**
@@ -259,7 +259,7 @@ trait HasAPIMethods
 	 */
 	public function getModel()
 	{
-	    return $this->model;
+		return $this->model;
 	}
 
 	/**
@@ -270,9 +270,9 @@ trait HasAPIMethods
 	 */
 	public function setModel($model)
 	{
-	    $this->model = $model;
+		$this->model = $model;
 
-	    return $this;
+		return $this;
 	}
 
 	/**
@@ -282,7 +282,7 @@ trait HasAPIMethods
 	 */
 	public function getTransformer()
 	{
-	    return $this->transformer;
+		return $this->transformer;
 	}
 
 	/**
@@ -293,9 +293,9 @@ trait HasAPIMethods
 	 */
 	public function setTransformer($transformer)
 	{
-	    $this->transformer = $transformer;
+		$this->transformer = $transformer;
 
-	    return $this;
+		return $this;
 	}
 
 	/**
@@ -306,10 +306,10 @@ trait HasAPIMethods
 	public function getAllowedMethods()
 	{
 		if (count($this->allowedMethods) === 0) {
-		    return $this->getProtectedMethods();
+			return $this->getProtectedMethods();
 		}
 
-	    return $this->allowedMethods;
+		return $this->allowedMethods;
 	}
 
 	/**
@@ -320,9 +320,9 @@ trait HasAPIMethods
 	 */
 	public function setAllowedMethods($allowedMethods)
 	{
-	    $this->allowedMethods = $allowedMethods;
+		$this->allowedMethods = $allowedMethods;
 
-	    return $this;
+		return $this;
 	}
 
 	/**
@@ -333,10 +333,10 @@ trait HasAPIMethods
 	public function getIncludes()
 	{
 		if (! isset($this->includes)) {
-		    return $this->includes;
+			return $this->includes;
 		}
 
-	    return [];
+		return [];
 	}
 
 	/**
@@ -346,7 +346,7 @@ trait HasAPIMethods
 	 */
 	public function getIndexIncludes()
 	{
-	    return array_merge($this->indexIncludes,$this->getIncludes());
+		return array_merge($this->indexIncludes,$this->getIncludes());
 	}
 
 	/**
@@ -357,9 +357,9 @@ trait HasAPIMethods
 	 */
 	public function setIndexIncludes($includes)
 	{
-	    $this->indexIncludes = $includes;
+		$this->indexIncludes = $includes;
 
-	    return $this;
+		return $this;
 	}
 
 	/**
@@ -369,7 +369,7 @@ trait HasAPIMethods
 	 */
 	public function getShowIncludes()
 	{
-	    return array_merge($this->showIncludes,$this->getIncludes());
+		return array_merge($this->showIncludes,$this->getIncludes());
 	}
 
 	/**
@@ -380,9 +380,9 @@ trait HasAPIMethods
 	 */
 	public function setShowIncludes($includes)
 	{
-	    $this->showIncludes = $includes;
+		$this->showIncludes = $includes;
 
-	    return $this;
+		return $this;
 	}
 
 	/**
@@ -392,7 +392,7 @@ trait HasAPIMethods
 	 */
 	public function getProtectedMethods()
 	{
-	    return ['index','show','store','destroy','update'];
+		return ['index','show','store','destroy','update'];
 	}
 
 	/**
@@ -404,10 +404,10 @@ trait HasAPIMethods
 	public function getPolicy($key)
 	{
 		if (collect($this->policy)->contains($key)) {
-		    return $this->policy;
+			return $this->policy;
 		}
 
-	    return false;
+		return false;
 	}
 
 	/**
@@ -416,11 +416,11 @@ trait HasAPIMethods
 	 * @return \Illuminate\Database\Eloquent\Collection|static[]
 	 */
 	public function getIndexCollectionScope(){
-        $class = static::class;
+		$class = static::class;
 
-        if (method_exists($class, 'setIndexCollectionScope')) {
-            return $this->setIndexCollectionScope();
-        }
+		if (method_exists($class, 'setIndexCollectionScope')) {
+			return $this->setIndexCollectionScope();
+		}
 
 		return $this->getModel()::get();
 	}
@@ -431,11 +431,11 @@ trait HasAPIMethods
 	 * @return \App\Transformers\Class
 	 */
 	public function getIndexTransformer(){
-        $class = static::class;
+		$class = static::class;
 
-        if (method_exists($class, 'setIndexTransformer')) {
-            return $this->setIndexTransformer();
-        }
+		if (method_exists($class, 'setIndexTransformer')) {
+			return $this->setIndexTransformer();
+		}
 
 		return $this->getTransformer();
 	}
@@ -446,11 +446,11 @@ trait HasAPIMethods
 	 * @return \Illuminate\Database\Eloquent\Collection|static[]
 	 */
 	public function getShowItemScope($request){
-        $class = static::class;
+		$class = static::class;
 
-        if (method_exists($class, 'setShowItemScope')) {
-            return $this->setShowItemScope($request);
-        }
+		if (method_exists($class, 'setShowItemScope')) {
+			return $this->setShowItemScope($request);
+		}
 
 		return $this->getModel()::find($request->id);
 	}
@@ -461,11 +461,11 @@ trait HasAPIMethods
 	 * @return \App\Transformers\Class
 	 */
 	public function getStoreTransformer(){
-        $class = static::class;
+		$class = static::class;
 
-        if (method_exists($class, 'setStoreTransformer')) {
-            return $this->setStoreTransformer();
-        }
+		if (method_exists($class, 'setStoreTransformer')) {
+			return $this->setStoreTransformer();
+		}
 
 		return $this->getTransformer();
 	}
@@ -479,7 +479,7 @@ trait HasAPIMethods
 		$class = static::class;
 
 		if (method_exists($class, 'setStoreAfterFillHook')) {
-		    return $this->setStoreAfterFillHook($model);
+			return $this->setStoreAfterFillHook($model);
 		}
 	}
 
@@ -492,7 +492,7 @@ trait HasAPIMethods
 		$class = static::class;
 
 		if (method_exists($class, 'setStoreAfterSaveHook')) {
-		    return $this->setStoreAfterSaveHook($model, $request);
+			return $this->setStoreAfterSaveHook($model, $request);
 		}
 	}
 
@@ -505,7 +505,7 @@ trait HasAPIMethods
 		$class = static::class;
 
 		if (method_exists($class, 'setUpdateAfterFillHook')) {
-		    return $this->setUpdateAfterFillHook($model);
+			return $this->setUpdateAfterFillHook($model);
 		}
 	}
 
@@ -518,7 +518,7 @@ trait HasAPIMethods
 		$class = static::class;
 
 		if (method_exists($class, 'setUpdateAfterSaveHook')) {
-		    return $this->setUpdateAfterSaveHook($model, $request);
+			return $this->setUpdateAfterSaveHook($model, $request);
 		}
 	}
 

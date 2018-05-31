@@ -63,7 +63,7 @@ trait HasAPIMethods
 	/*
 	* Array of custom messages for validation rules
 	*/
-	protected $storeValidationMessages =[];
+	protected $storeValidationMessages = [];
 
 	/*
 	* Array of validation rules
@@ -73,7 +73,7 @@ trait HasAPIMethods
 	/*
 	* Array of custom messages for validation rules
 	*/
-	protected $updateValidationMessages =[];
+	protected $updateValidationMessages = [];
 
 	/*
 	* Array of validation rules for store and update

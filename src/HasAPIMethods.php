@@ -55,6 +55,36 @@ trait HasAPIMethods
 	*/
 	protected $policy;
 
+	/*
+	* Array of validation rules
+	*/
+	protected $storeValidationRules = [];
+
+	/*
+	* Array of custom messages for validation rules
+	*/
+	protected $storeValidationMessages =[];
+
+	/*
+	* Array of validation rules
+	*/
+	protected $updateValidationRules = [];
+
+	/*
+	* Array of custom messages for validation rules
+	*/
+	protected $updateValidationMessages =[];
+
+	/*
+	* Array of validation rules for store and update
+	*/
+	protected $validationRules = [];
+	
+	/*
+	* Array of custom messages for validation rules for store and update
+	*/
+	protected $validationMessages = [];
+
 	public function __construct(Request $request)
 	{
 	    $this->attributes = $request;
@@ -140,6 +170,11 @@ trait HasAPIMethods
 	        $this->authorize('create', $this->getModel());
 	    }
 
+	    $request->validate(
+	    	array_merge($this->validationRules,$this->storeValidationRules),
+	    	array_merge($this->validationMessages,$this->storeValidationMessages)
+	    );
+
 		$model = $this->getModel();
 		$model = new $model;
 
@@ -168,6 +203,11 @@ trait HasAPIMethods
 	 */
 	public function update(Request $request)
 	{
+	    $request->validate(
+	    	array_merge($this->validationRules,$this->updateValidationRules),
+	    	array_merge($this->validationMessages,$this->updateValidationMessages)
+	    );
+
     	$model = $this->getModel();
     	$model = new $model;
     	$find_model = $model->findOrFail($request->id);
